@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Programowanie_aplikacji_internetowych.application.Services
+namespace Programowanie_aplikacji_internetowych.Infrastructure.Repositories
 {
-    internal class UserService
+    internal class UserRepository
     {
     }
 }
