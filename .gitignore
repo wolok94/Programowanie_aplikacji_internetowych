@@ -1,0 +1,74 @@
+# Pliki i foldery .NET/C#
+bin/
+obj/
+out/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.log
+*.csproj.user
+*.suo
+*.user
+*.sln.docstates
+*.vs/
+
+# Konfiguracja systemu operacyjnego
+*.DS_Store
+Thumbs.db
+
+# Pliki generowane przez użytkownika w Rider/Visual Studio
+.idea/
+.vscode/
+.vs/
+
+# Pliki narzędzi budowania
+BuildArtifacts/
+TestResults/
+__pycache__/
+*.coverage
+*.coveragexml
+*.trx
+
+# Pliki narzędzi typu NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Ustawienia tymczasowe .NET
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.ide.log
+
+# Typowe pliki Angular
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+angular.json
+package-lock.json
+yarn.lock
+
+# Typowe foldery Angular CLI
+/.angular/cache/
+/.angular/
+.angular-cli.json
+/.firebase/
+.firebaserc
+
+# Tymczasowe i systemowe pliki Angular
+*.tsbuildinfo
+tmp/
+temp/
+coverage/
+logs/
+
+# Pliki środowiskowe
+.env
+.env.*.local
+
+# Pliki logów
+*.log
+npm-debug.log*
