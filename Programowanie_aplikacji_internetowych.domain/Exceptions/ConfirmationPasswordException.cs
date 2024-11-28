@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Programowanie_aplikacji_internetowych.domain.Exceptions
+namespace Programowanie_aplikacji_internetowych.domain.Exceptions;
+
+public class ConfirmationPasswordException : MyAppException
 {
-    internal class ConfirmationPasswordException
+    public ConfirmationPasswordException(string message) : base(message)
     {
     }
 }

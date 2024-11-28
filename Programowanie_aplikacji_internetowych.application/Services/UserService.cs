@@ -15,10 +15,12 @@ namespace Programowanie_aplikacji_internetowych.application.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IPasswordHasher _passwordHasher;
 
-    public UserService(IUserRepository userRepository, IPasswordHasher)
+    public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher)
     {
         _userRepository = userRepository;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task Register(RegisterUserDto registerUserDto)
@@ -30,11 +32,13 @@ public class UserService : IUserService
 
         var user = new User
         {
-            Password = registerUserDto.Password,
+            Password = _passwordHasher.HashPassword(registerUserDto.Password),
             Email = registerUserDto.Email,
             FirstName = registerUserDto.FirstName,
             LastName = registerUserDto.LastName,
             Username = registerUserDto.Username
         };
+
+        await _userRepository.AddAsync(user);
     }
 }
