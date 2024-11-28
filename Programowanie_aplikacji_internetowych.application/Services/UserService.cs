@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using Programowanie_aplikacji_internetowych.domain.Dtos.Users;
 using Programowanie_aplikacji_internetowych.domain.Entities;
 using Programowanie_aplikacji_internetowych.domain.Exceptions;
@@ -15,9 +16,9 @@ namespace Programowanie_aplikacji_internetowych.application.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
-    private readonly IPasswordHasher _passwordHasher;
+    private readonly IPasswordHasher<User> _passwordHasher;
 
-    public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher)
+    public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
@@ -32,12 +33,12 @@ public class UserService : IUserService
 
         var user = new User
         {
-            Password = _passwordHasher.HashPassword(registerUserDto.Password),
             Email = registerUserDto.Email,
             FirstName = registerUserDto.FirstName,
             LastName = registerUserDto.LastName,
             Username = registerUserDto.Username
         };
+        user.Password = _passwordHasher.HashPassword(user, registerUserDto.Password);
 
         await _userRepository.AddAsync(user);
     }

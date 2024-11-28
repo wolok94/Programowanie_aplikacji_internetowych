@@ -14,7 +14,7 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure;
 
 public static class InfrastructureRegistration
 {
-    public static IServiceCollection RegisterApplication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(options =>
         {
