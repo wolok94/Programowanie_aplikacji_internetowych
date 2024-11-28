@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Programowanie_aplikacji_internetowych.webapi", "Programowanie_aplikacji_internetowych.webapi\Programowanie_aplikacji_internetowych.webapi.csproj", "{8D018B01-847E-4C0C-A616-3F04C450A5DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Programowanie_aplikacji_internetowych.webapi", "Programowanie_aplikacji_internetowych.webapi\Programowanie_aplikacji_internetowych.webapi.csproj", "{8D018B01-847E-4C0C-A616-3F04C450A5DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Programowanie_aplikacji_internetowych.domain", "Programowanie_aplikacji_internetowych.domain\Programowanie_aplikacji_internetowych.domain.csproj", "{5314BFE5-3E33-4670-BDFB-12C685F3C31A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Programowanie_aplikacji_internetowych.domain", "Programowanie_aplikacji_internetowych.domain\Programowanie_aplikacji_internetowych.domain.csproj", "{5314BFE5-3E33-4670-BDFB-12C685F3C31A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Programowanie_aplikacji_internetowych.Infrastructure", "Programowanie_aplikacji_internetowych.Infrastructure\Programowanie_aplikacji_internetowych.Infrastructure.csproj", "{83B9D8E8-7809-40F6-9415-0CFD7FF1121C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Programowanie_aplikacji_internetowych.Infrastructure", "Programowanie_aplikacji_internetowych.Infrastructure\Programowanie_aplikacji_internetowych.Infrastructure.csproj", "{83B9D8E8-7809-40F6-9415-0CFD7FF1121C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Programowanie_aplikacji_internetowych.application", "Programowanie_aplikacji_internetowych.application\Programowanie_aplikacji_internetowych.application.csproj", "{83280745-34C3-4C90-83C2-DA7A422E4F4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{83B9D8E8-7809-40F6-9415-0CFD7FF1121C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83B9D8E8-7809-40F6-9415-0CFD7FF1121C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83B9D8E8-7809-40F6-9415-0CFD7FF1121C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83280745-34C3-4C90-83C2-DA7A422E4F4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83280745-34C3-4C90-83C2-DA7A422E4F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83280745-34C3-4C90-83C2-DA7A422E4F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83280745-34C3-4C90-83C2-DA7A422E4F4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

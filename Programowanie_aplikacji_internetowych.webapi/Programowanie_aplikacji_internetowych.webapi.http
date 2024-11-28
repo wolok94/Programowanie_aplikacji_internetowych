@@ -1,6 +1,0 @@
-@Programowanie_aplikacji_internetowych.webapi_HostAddress = http://localhost:5157
-
-GET {{Programowanie_aplikacji_internetowych.webapi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
