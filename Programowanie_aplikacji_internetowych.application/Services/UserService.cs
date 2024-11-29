@@ -42,4 +42,23 @@ public class UserService : IUserService
 
         await _userRepository.AddAsync(user);
     }
+
+    public async Task Login(LoginUserDto loginUserDto)
+    {
+        var user = await _userRepository.Login(loginUserDto.Password);
+        if (user == null)
+        {
+            throw new ArgumentException("Nie ma takiego użytkownika");
+        }
+
+        var passwordIsVerified = _passwordHasher.VerifyHashedPassword(user, user.Password, loginUserDto.Password);
+        if (passwordIsVerified == Microsoft.AspNetCore.Identity.PasswordVerificationResult.Failed)
+        {
+            throw new ValidationPasswordException("Username lub hasło jest nieprawidłowe");
+        }
+
+
+
+
+    }
 }
