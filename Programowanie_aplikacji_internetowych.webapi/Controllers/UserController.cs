@@ -15,6 +15,7 @@ namespace Programowanie_aplikacji_internetowych.webapi.Controllers
         {
             _userService = userService;
         }
+
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDto registerUserDto)
@@ -25,6 +26,18 @@ namespace Programowanie_aplikacji_internetowych.webapi.Controllers
             }
             await _userService.Register(registerUserDto);
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserDto loginUserDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidModelException("Model rejestracji jest niezgodny");
+            }
+            var token = await _userService.Login(loginUserDto);
+            return Ok(token);
         }
     }
 }

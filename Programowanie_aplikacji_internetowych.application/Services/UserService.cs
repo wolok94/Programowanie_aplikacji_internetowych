@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
+using Programowanie_aplikacji_internetowych.domain.Dtos.RefreshTokens;
 using Programowanie_aplikacji_internetowych.domain.Dtos.Users;
 using Programowanie_aplikacji_internetowych.domain.Entities;
 using Programowanie_aplikacji_internetowych.domain.Exceptions;
@@ -17,11 +18,13 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly ITokenService _tokenService;
 
-    public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
+    public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, ITokenService tokenService)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
+        _tokenService = tokenService;
     }
 
     public async Task Register(RegisterUserDto registerUserDto)
@@ -43,7 +46,7 @@ public class UserService : IUserService
         await _userRepository.AddAsync(user);
     }
 
-    public async Task Login(LoginUserDto loginUserDto)
+    public async Task<Token> Login(LoginUserDto loginUserDto)
     {
         var user = await _userRepository.Login(loginUserDto.Password);
         if (user == null)
@@ -56,6 +59,9 @@ public class UserService : IUserService
         {
             throw new ValidationPasswordException("Username lub hasło jest nieprawidłowe");
         }
+
+        var token = await _tokenService.BuildToken(null, null, user);
+        return token;
 
 
 

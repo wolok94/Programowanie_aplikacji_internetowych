@@ -12,26 +12,32 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Security.Cryptography;
+using Programowanie_aplikacji_internetowych.domain.Dtos.RefreshTokens;
+using Programowanie_aplikacji_internetowych.Infrastructure;
 
 namespace Programowanie_aplikacji_internetowych.application.Services;
 
 public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
+    private readonly AppDbContext _dbContext;
 
-    public TokenService(IConfiguration configuration)
+    public TokenService(IConfiguration configuration, AppDbContext dbContext)
     {
         _configuration = configuration;
+        _dbContext = dbContext;
     }
 
-    public string BuildToken(string? accessToken, string? refreshToken ,User user)
+    public async Task<Token> BuildToken(string? accessToken, string? refreshToken ,User user)
     {
         JwtSecurityToken tokenDescriptor;
+        Guid userId;
 
         if (refreshToken != null && accessToken != null)
         {
             var principal = GetPrincipalFromExpiredToken(accessToken);
-            var userId = principal.Identity.GetUserId();
+            userId = Guid.Parse(principal.Identity.GetUserId());
             tokenDescriptor = GenerateAccessToken(principal.Claims);
         }
         else
@@ -42,12 +48,45 @@ public class TokenService : ITokenService
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
         };
-
+            userId = user.Id;
             tokenDescriptor = GenerateAccessToken(claims);
         }
 
+        var newRefreshTokenDto = GenerateRefreshToken();
+        var newRefreshToken = new RefreshToken
+        {
+            CreatedDate = newRefreshTokenDto.CreatedDate,
+            ExpiryDate = newRefreshTokenDto.ExpiryDate,
+            Token = newRefreshTokenDto.Token,
+            UserId = userId
+        };
+        await _dbContext.RefreshTokens.AddAsync(newRefreshToken);
+        await _dbContext.SaveChangesAsync();
 
-        return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+        var token = new Token
+        {
+            AccessToken = new JwtSecurityTokenHandler().WriteToken(tokenDescriptor),
+            RefreshToken = newRefreshTokenDto,
+        };
+
+
+        return token;
+    }
+
+    private RefreshTokenDto GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(randomNumber);
+            var token = new RefreshTokenDto
+            {
+                CreatedDate = DateTime.Now,
+                ExpiryDate = DateTime.Now.AddDays(30),
+                Token = Convert.ToBase64String(randomNumber)
+            };
+            return token;
+        }
     }
 
     private JwtSecurityToken GenerateAccessToken(IEnumerable<Claim> claims)

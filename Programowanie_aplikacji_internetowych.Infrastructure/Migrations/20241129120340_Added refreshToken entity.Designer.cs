@@ -11,7 +11,7 @@ using Programowanie_aplikacji_internetowych.Infrastructure;
 namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241129104404_Added refreshToken entity")]
+    [Migration("20241129120340_Added refreshToken entity")]
     partial class AddedrefreshTokenentity
     {
         /// <inheritdoc />
@@ -23,6 +23,7 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
             modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
@@ -39,6 +40,8 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -78,7 +81,7 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                 {
                     b.HasOne("Programowanie_aplikacji_internetowych.domain.Entities.User", "User")
                         .WithMany("RefreshTokens")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

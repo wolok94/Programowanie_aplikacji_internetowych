@@ -20,6 +20,7 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
             modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
@@ -36,6 +37,8 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -75,7 +78,7 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                 {
                     b.HasOne("Programowanie_aplikacji_internetowych.domain.Entities.User", "User")
                         .WithMany("RefreshTokens")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
