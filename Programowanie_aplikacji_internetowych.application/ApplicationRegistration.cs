@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Programowanie_aplikacji_internetowych.application.Services;
 using Programowanie_aplikacji_internetowych.domain.Entities;
@@ -19,6 +20,8 @@ public static class ApplicationRegistration
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUserContextService, UserContextService>();
+        
 
 
         return services;

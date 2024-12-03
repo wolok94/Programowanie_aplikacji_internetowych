@@ -91,10 +91,10 @@ public class TokenService : ITokenService
 
     private JwtSecurityToken GenerateAccessToken(IEnumerable<Claim> claims)
     {
-        var key = _configuration["Jwt:Key"];
-        var expiry = _configuration["Jwt:ExpiryMinutes"];
-        var issuer = _configuration["Jwt:Issuer"];
-        var audience = _configuration["Jwt:Audience"];
+        var key = _configuration["JWT:Key"];
+        var expiry = _configuration["JWT:ExpiryMinutes"];
+        var issuer = _configuration["JWT:Issuer"];
+        var audience = _configuration["JWT:Audience"];
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -111,7 +111,7 @@ public class TokenService : ITokenService
             ValidateAudience = false,
             ValidateIssuer = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"])),
             ValidateLifetime = false
         };
 
@@ -121,7 +121,7 @@ public class TokenService : ITokenService
         var jwtSecurityToken = securityToken as JwtSecurityToken;
 
         if (jwtSecurityToken == null ||
-    !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+        !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256Signature, StringComparison.InvariantCultureIgnoreCase))
         {
             throw new SecurityTokenException("Invalid token");
         }

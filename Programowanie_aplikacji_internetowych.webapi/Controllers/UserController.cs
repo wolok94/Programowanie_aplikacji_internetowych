@@ -39,5 +39,27 @@ namespace Programowanie_aplikacji_internetowych.webapi.Controllers
             var token = await _userService.Login(loginUserDto);
             return Ok(token);
         }
+
+        [HttpPost]
+        [Route("RefreshToken")]
+        public async Task<IActionResult> RefreshToken()
+        {
+            string accessToken = "";
+            string refreshToken = "";
+
+            if (Request.Headers.TryGetValue("Access-Token", out var accessTokenHeader))
+            {
+                accessToken = accessTokenHeader.ToString();
+            }
+            if (Request.Headers.TryGetValue("Refresh-Token", out var refreshTokenHeader))
+            {
+                refreshToken = refreshTokenHeader.ToString();
+            }
+
+            var token = await _userService.RefreshToken(accessToken, refreshToken);
+
+            return Ok(token);
+        }
     }
 }
+

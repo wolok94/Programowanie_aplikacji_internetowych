@@ -19,12 +19,15 @@ public class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly ITokenService _tokenService;
+    private readonly IUserContextService _userContextService;
 
-    public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, ITokenService tokenService)
+    public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, ITokenService tokenService
+        , IUserContextService userContextService)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
         _tokenService = tokenService;
+        _userContextService = userContextService;
     }
 
     public async Task Register(RegisterUserDto registerUserDto)
@@ -66,5 +69,13 @@ public class UserService : IUserService
 
 
 
+    }
+
+    public async Task<Token> RefreshToken(string accessToken, string refreshToken )
+    {
+        var userId = _userContextService.UserId;
+        var user = await _userRepository.GetById(userId.Value);
+        var token = await _tokenService.BuildToken(accessToken, refreshToken, user);
+        return token;
     }
 }
