@@ -21,6 +21,7 @@ public static class ApplicationRegistration
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IUserContextService, UserContextService>();
+        services.AddScoped<IPostService, PostService>();
         
 
 
