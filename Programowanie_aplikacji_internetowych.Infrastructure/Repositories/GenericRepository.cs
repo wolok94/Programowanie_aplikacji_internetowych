@@ -28,13 +28,13 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<T>> GetAll()
+    public virtual async Task<IEnumerable<T>> GetAll()
     {
         var items = await _dbContext.Set<T>().ToListAsync();
         return items;
     }
 
-    public async Task<T> GetById(Guid id)
+    public virtual async Task<T> GetById(Guid id)
     {
         var item = await _dbContext.Set<T>().FindAsync(id);
         return item;

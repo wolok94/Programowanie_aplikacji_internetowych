@@ -1,4 +1,5 @@
-﻿using Programowanie_aplikacji_internetowych.domain.Entities;
+﻿using Programowanie_aplikacji_internetowych.domain.Dtos.Posts;
+using Programowanie_aplikacji_internetowych.domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Programowanie_aplikacji_internetowych.domain.Interfaces.Services;
 
 public interface IPostService
 {
-    Task CreatePost(Post post);
+    Task CreatePost(CreatePostDto post);
+    Task<IEnumerable<Post>> GetAllPosts();
 }
