@@ -13,6 +13,6 @@ public interface IPostService
     Task CreatePost(CreatePostDto post);
     Task DeletePost(Guid id);
     Task<IEnumerable<GetPostsDto>> GetAllPosts();
-    Task<Post> GetById(Guid id);
+    Task<GetPostByIdDto> GetById(Guid id);
     Task UpdatePost(Guid id, UpdatePostDto postDto);
 }

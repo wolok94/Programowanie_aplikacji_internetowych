@@ -1,4 +1,5 @@
-﻿using Programowanie_aplikacji_internetowych.domain.Entities;
+﻿using Programowanie_aplikacji_internetowych.domain.Dtos.MetaDatas;
+using Programowanie_aplikacji_internetowych.domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ public class GetPostsDto
 {
     public string Title { get; set; }
     public string Text { get; set; }
-    public MetaData MetaData { get; set; }
+    public string ImageUrl { get; set; }
+    public MetaDataDto MetaData { get; set; }
     public int NumberOfComments { get; set; }
 }

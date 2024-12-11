@@ -1,4 +1,6 @@
-﻿using Programowanie_aplikacji_internetowych.domain.Dtos.Posts;
+﻿using Programowanie_aplikacji_internetowych.domain.Dtos.Comments;
+using Programowanie_aplikacji_internetowych.domain.Dtos.MetaDatas;
+using Programowanie_aplikacji_internetowych.domain.Dtos.Posts;
 using Programowanie_aplikacji_internetowych.domain.Entities;
 using Programowanie_aplikacji_internetowych.domain.Interfaces.Repository;
 using Programowanie_aplikacji_internetowych.domain.Interfaces.Services;
@@ -31,7 +33,8 @@ public class PostService : IPostService
             {
                 CreatedDate = DateTime.Now,
                 UserId = _userContext.UserId.Value
-            }
+            },
+            ImageUrl = post.ImageUrl
         };
         await _postRepository.AddAsync(newPost);
     }
@@ -41,17 +44,53 @@ public class PostService : IPostService
         var posts = await _postRepository.GetAll();
         var postsDto = posts.Select(x => new GetPostsDto
         {
-            MetaData = x.MetaData,
+            MetaData = new MetaDataDto
+            {
+                CreatedDate = x.MetaData.CreatedDate,
+                ModifiedById = x.MetaData.ModifiedById,
+                ModifiedDate = x.MetaData.ModifiedDate,
+                UserId = x.MetaData.UserId
+            },
             NumberOfComments = x.Comments.Count(),
             Text = x.Text,
-            Title = x.Title
+            Title = x.Title,
+            ImageUrl = x.ImageUrl
         });
         return postsDto;
     }
 
-    public async Task<Post> GetById(Guid id)
+    public async Task<GetPostByIdDto> GetById(Guid id)
     {
-        return await _postRepository.GetById(id);
+        var post = await _postRepository.GetById(id);
+
+        var postDto = new GetPostByIdDto
+        {
+            Comments = post.Comments.Select(x => new CommentDto
+            {
+                Id = x.Id,
+                Text = x.Text,
+                MetaData = new MetaDataDto
+                {
+                    CreatedDate = x.MetaData.CreatedDate,
+                    ModifiedById = x.MetaData.ModifiedById,
+                    ModifiedDate = x.MetaData.ModifiedDate,
+                    UserId = x.MetaData.UserId
+                }
+            }),
+            MetaData = new MetaDataDto
+            {
+                CreatedDate = post.MetaData.CreatedDate,
+                ModifiedById = post.MetaData.ModifiedById,
+                ModifiedDate = post.MetaData.ModifiedDate,
+                UserId = post.MetaData.UserId
+            },
+            Id = post.Id,
+            Text = post.Text,
+            Title = post.Title,
+            ImageUrl = post.ImageUrl
+        };
+
+        return postDto;
     }
 
     public async Task DeletePost(Guid id)
@@ -67,6 +106,7 @@ public class PostService : IPostService
         post.Title = postDto.Title;
         post.MetaData.ModifiedDate = DateTime.Now;
         post.MetaData.ModifiedById = _userContext.UserId;
+        post.ImageUrl = postDto.ImageUrl;
         await _postRepository.UpdateAsync(post);
     }
 }
