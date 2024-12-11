@@ -36,13 +36,37 @@ public class PostService : IPostService
         await _postRepository.AddAsync(newPost);
     }
 
-    public async Task<IEnumerable<Post>> GetAllPosts()
+    public async Task<IEnumerable<GetPostsDto>> GetAllPosts()
     {
-        return await _postRepository.GetAll();
+        var posts = await _postRepository.GetAll();
+        var postsDto = posts.Select(x => new GetPostsDto
+        {
+            MetaData = x.MetaData,
+            NumberOfComments = x.Comments.Count(),
+            Text = x.Text,
+            Title = x.Title
+        });
+        return postsDto;
     }
 
     public async Task<Post> GetById(Guid id)
     {
         return await _postRepository.GetById(id);
+    }
+
+    public async Task DeletePost(Guid id)
+    {
+        var post = await _postRepository.GetById(id);
+        await _postRepository.DeleteAsync(post);
+    }
+
+    public async Task UpdatePost(Guid id, UpdatePostDto postDto)
+    {
+        var post = await _postRepository.GetById(id);
+        post.Text = postDto.Text;
+        post.Title = postDto.Title;
+        post.MetaData.ModifiedDate = DateTime.Now;
+        post.MetaData.ModifiedById = _userContext.UserId;
+        await _postRepository.UpdateAsync(post);
     }
 }

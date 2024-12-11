@@ -26,7 +26,7 @@ public class PostController : Controller
             throw new ArgumentException("Nieprawidłowy model postu");
         }
         await _postService.CreatePost(post);
-        return Ok();
+        return Created();
     }
 
     [HttpGet]
@@ -43,5 +43,21 @@ public class PostController : Controller
     {
         var post = await _postService.GetById(id);
         return Ok(post);
+    }
+
+    [HttpDelete]
+    [Route("delete/{id}")]
+    public async Task<IActionResult> Delete([FromRoute]Guid id)
+    {
+        await _postService.DeletePost(id);
+        return Ok();
+    }
+
+    [HttpPatch]
+    [Route("update/{id}")]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdatePostDto postDto)
+    {
+        await _postService.UpdatePost(id, postDto);
+        return Ok();
     }
 }
