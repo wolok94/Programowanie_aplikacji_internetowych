@@ -36,4 +36,12 @@ public class PostController : Controller
         var posts = await _postService.GetAllPosts();
         return Ok(posts);
     }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> GetById([FromRoute] Guid id)
+    {
+        var post = await _postService.GetById(id);
+        return Ok(post);
+    }
 }

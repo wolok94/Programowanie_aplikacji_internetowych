@@ -25,4 +25,9 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
                         .Include(x => x.Comments)
                         .ToListAsync();
     }
+
+    public override async Task<Post> GetById(Guid id) => await _dbContext.Posts
+            .Include(x => x.MetaData)
+            .Include(x => x.Comments)
+            .FirstOrDefaultAsync(x => x.Id == id);
 }

@@ -12,4 +12,5 @@ public interface IPostService
 {
     Task CreatePost(CreatePostDto post);
     Task<IEnumerable<Post>> GetAllPosts();
+    Task<Post> GetById(Guid id);
 }

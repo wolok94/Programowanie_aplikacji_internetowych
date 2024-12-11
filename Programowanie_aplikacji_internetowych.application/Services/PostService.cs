@@ -40,4 +40,9 @@ public class PostService : IPostService
     {
         return await _postRepository.GetAll();
     }
+
+    public async Task<Post> GetById(Guid id)
+    {
+        return await _postRepository.GetById(id);
+    }
 }
