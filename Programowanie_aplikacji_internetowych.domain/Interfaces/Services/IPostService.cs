@@ -11,5 +11,8 @@ namespace Programowanie_aplikacji_internetowych.domain.Interfaces.Services;
 public interface IPostService
 {
     Task CreatePost(CreatePostDto post);
-    Task<IEnumerable<Post>> GetAllPosts();
+    Task DeletePost(Guid id);
+    Task<IEnumerable<GetPostsDto>> GetAllPosts();
+    Task<GetPostByIdDto> GetById(Guid id);
+    Task UpdatePost(Guid id, UpdatePostDto postDto);
 }

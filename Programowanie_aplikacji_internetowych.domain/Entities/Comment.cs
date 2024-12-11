@@ -9,7 +9,7 @@ namespace Programowanie_aplikacji_internetowych.domain.Entities;
 public class Comment
 {
     public Guid Id { get; set; }
-    public string Test { get; set; }
+    public string Text { get; set; }
     public MetaData MetaData { get; set; }
     public Guid MetaDataId { get; set; }
     public Post Post { get; set; }
