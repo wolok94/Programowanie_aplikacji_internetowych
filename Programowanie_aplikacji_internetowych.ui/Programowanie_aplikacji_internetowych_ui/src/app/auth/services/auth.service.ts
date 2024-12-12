@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginModel } from '../models/login-model';
 import { Observable } from 'rxjs';
@@ -13,8 +13,24 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
   
-  login(loginModel: LoginModel): Observable<void> {
-    console.log(this.apiUrl);
-    return this.httpClient.post<void>(this.apiUrl + "/Login", loginModel);
+  login(loginModel: LoginModel): Observable<HttpResponse<void>> {
+    return this.httpClient.post<HttpResponse<void>>(this.apiUrl + "/Login", loginModel);
   }
+
+  saveTokens(accessToken: string, refreshToken: string, accessTokenExpiresAt: string, refreshTokenExpiresAt: string){
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('accessTokenExpiresAt', accessTokenExpiresAt.toString());
+    localStorage.setItem('refreshTokenExpiresAt', refreshTokenExpiresAt.toString());
+  }
+
+  removeTokens(){
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessTokenExpiresAt');
+    localStorage.removeItem('refreshTokenExpiresAt');
+
+
+  }
+
 }

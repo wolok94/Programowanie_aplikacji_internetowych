@@ -37,6 +37,12 @@ namespace Programowanie_aplikacji_internetowych.webapi.Controllers
                 throw new InvalidModelException("Model rejestracji jest niezgodny");
             }
             var token = await _userService.Login(loginUserDto);
+
+            Response.Headers.Add("X-Access-Token", token.AccessToken);
+            Response.Headers.Add("X-Refresh-Token", token.RefreshToken.Token);
+            Response.Headers.Add("X-Access-Token-ExpiresAt", token.AccessTokenExpiresAt.ToString());
+            Response.Headers.Add("X-Refresh-Token-ExpiresAt", token.RefreshToken.ExpiryDate.ToString());
+
             return Ok(token);
         }
 
@@ -58,7 +64,12 @@ namespace Programowanie_aplikacji_internetowych.webapi.Controllers
 
             var token = await _userService.RefreshToken(accessToken, refreshToken);
 
-            return Ok(token);
+            Response.Headers.Add("X-Access-Token", token.AccessToken);
+            Response.Headers.Add("X-Refresh-Token", token.RefreshToken.Token);
+            Response.Headers.Add("X-Access-Token-ExpiresAt", token.AccessTokenExpiresAt.ToString());
+            Response.Headers.Add("X-Refresh-Token-ExpiresAt", token.RefreshToken.ExpiryDate.ToString());
+
+            return Ok();
         }
     }
 }
