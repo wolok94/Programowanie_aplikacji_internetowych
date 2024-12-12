@@ -1,0 +1,43 @@
+<form class="p-5 shadow-lg bg-white rounded border mt-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+    <h2 class="text-center mb-4 text-primary">Logowanie</h2>
+  
+    <!-- Email Field -->
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        formControlName="username"
+        placeholder="Enter your email"
+        required
+      />
+      <label for="email">Nazwa użytkownika</label>
+    </div>
+  
+    <!-- Password Field -->
+    <div class="form-floating mb-4">
+      <input
+        type="password"
+        id="password"
+        class="form-control"
+        formControlName="password"
+        placeholder="Enter your password"
+        required
+      />
+      <label for="password">Hasło</label>
+    </div>
+  
+
+  
+    <!-- Submit Button -->
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary btn-lg">Login</button>
+    </div>
+  
+    <!-- Additional Links -->
+    <div class="text-center mt-3">
+      <a href="#" class="text-decoration-none text-muted">Forgot password?</a>
+      <br />
+      <a href="#" class="text-decoration-none text-muted">Create an account</a>
+    </div>
+  </form>
+  
