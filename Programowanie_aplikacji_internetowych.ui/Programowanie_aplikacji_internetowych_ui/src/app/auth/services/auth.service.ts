@@ -13,11 +13,12 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
   
-  login(loginModel: LoginModel): Observable<HttpResponse<void>> {
-    return this.httpClient.post<HttpResponse<void>>(this.apiUrl + "/Login", loginModel);
+  login(loginModel: LoginModel): Observable<HttpResponse<any>> {
+    return this.httpClient.post<HttpResponse<any>>(this.apiUrl + "/Login", loginModel, { observe: 'response' });
   }
 
-  saveTokens(accessToken: string, refreshToken: string, accessTokenExpiresAt: string, refreshTokenExpiresAt: string){
+  saveTokens(accessToken: string, refreshToken: string, accessTokenExpiresAt: string, refreshTokenExpiresAt: string) {
+    console.log("dodaje " + accessToken);
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
     localStorage.setItem('accessTokenExpiresAt', accessTokenExpiresAt.toString());
