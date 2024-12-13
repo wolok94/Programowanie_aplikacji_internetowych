@@ -38,9 +38,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("LocalhostPolicy", builder =>
     {
-        builder.WithOrigins("http://localhost:4200") 
+        builder.AllowAnyOrigin()
                .AllowAnyHeader()
-               .AllowAnyMethod(); 
+               .AllowAnyMethod()
+              .WithExposedHeaders("X-Access-Token", "X-Refresh-Token", "X-Access-Token-ExpiresAt", "X-Refresh-Token-ExpiresAt");
     });
 });
 

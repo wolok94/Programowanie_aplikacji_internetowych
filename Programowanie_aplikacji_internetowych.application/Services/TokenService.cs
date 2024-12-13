@@ -91,6 +91,7 @@ namespace Programowanie_aplikacji_internetowych.application.Services
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),
                 RefreshToken = refreshTokenDto,
+                AccessTokenExpiresAt = DateTime.Now.AddMinutes(Double.Parse(_configuration["JWT:ExpiryMinutes"])),
             };
         }
 

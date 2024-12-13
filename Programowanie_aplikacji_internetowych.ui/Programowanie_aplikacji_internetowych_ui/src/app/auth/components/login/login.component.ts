@@ -27,11 +27,10 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       let login: LoginModel = this.loginForm.value;
       this.authService.login(login).subscribe(response => {
-        console.log(response);
-        const accessToken = response.headers.get("Access-Token");
-        const refreshToken = response.headers.get("Refresh-Token");
-        const accessTokenExpiresAt = response.headers.get("Access-Token-ExpiresAt");
-        const refreshTokenExpiresAt = response.headers.get("Refresh-Token-ExpiresAt");
+        const accessToken = response.headers.get("x-access-token");
+        const refreshToken = response.headers.get("x-refresh-token");
+        const accessTokenExpiresAt = response.headers.get("x-access-token-expiresat");
+        const refreshTokenExpiresAt = response.headers.get("x-refresh-token-expiresat");
 
         if(accessToken && refreshToken && accessTokenExpiresAt && refreshTokenExpiresAt){
           this.authService.saveTokens(accessToken, refreshToken, accessTokenExpiresAt, refreshTokenExpiresAt);
