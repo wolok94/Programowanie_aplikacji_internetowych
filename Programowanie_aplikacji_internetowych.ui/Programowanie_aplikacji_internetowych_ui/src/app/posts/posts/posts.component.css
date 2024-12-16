@@ -17,4 +17,9 @@ body, html {
   .content {
     max-width: 800px; 
   }
+
+  img{
+    max-width: 400px;
+    max-height: 600px;
+  }
   

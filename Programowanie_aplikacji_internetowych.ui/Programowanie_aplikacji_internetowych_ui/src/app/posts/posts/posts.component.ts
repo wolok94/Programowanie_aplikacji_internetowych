@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { GetPostsModel } from '../models/get-posts-model';
 import { PostService } from '../services/post.service';
+import { PostModule } from '../modules/post/post.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
   standalone: true,
-  imports: [],
+  imports: [PostModule],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.css'
 })
@@ -15,12 +17,16 @@ export class PostsComponent implements OnInit{
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe(response => {
-      console.log(response);
+      this.posts = response;
     })
   }
 
-  constructor(private postService : PostService) {
+  constructor(private postService : PostService, private router: Router) {
     
+  }
+
+  showDetails(id: string) {
+    this.router.navigate(["post/" + id]);
   }
 
 }

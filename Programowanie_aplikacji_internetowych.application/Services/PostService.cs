@@ -44,6 +44,7 @@ public class PostService : IPostService
         var posts = await _postRepository.GetAll();
         var postsDto = posts.Select(x => new GetPostsDto
         {
+            Id = x.Id,
             MetaData = new MetaDataDto
             {
                 CreatedDate = x.MetaData.CreatedDate,
