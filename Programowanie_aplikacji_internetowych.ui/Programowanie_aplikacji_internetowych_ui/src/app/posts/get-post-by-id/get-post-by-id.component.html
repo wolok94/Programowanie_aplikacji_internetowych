@@ -1,1 +1,49 @@
-<p>get-post-by-id works!</p>
+<div class="container mt-5">
+    <div class="post-details card mb-4 ">
+      <div class="card-header bg-primary text-white">
+        <h2>{{ post.title }}</h2>
+      </div>
+      <div class="card-body">
+        <img src="{{ post.imageUrl }}" class="img-fluid rounded mb-3 d-block mx-auto" alt="Post Image">
+        <p class="text-muted">Opublikowany: {{ post.metaData.createdDate | date: 'dd-MM-yyyy' }}</p>
+        <p class="lead">{{ post.text }}</p>
+      </div>
+    </div>
+  
+    <div class="comments-section card">
+      <div class="card-header bg-secondary text-white">
+        <h4>Komentarze</h4>
+      </div>
+      <div class="card-body">
+        <div *ngFor="let comment of post.comments" class="mb-3">
+          <div class="d-flex align-items-start">
+            <div class="me-3">
+              <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Avatar">
+            </div>
+            <div>
+              <h6 class="fw-bold mb-1">{{ comment.metaData.userId }}</h6>
+              <p class="text-muted small mb-1">{{ comment.metaData.createdDate| date: 'dd-MM-yyyy HH:mm' }}</p>
+              <p>{{ comment.text }}</p>
+            </div>
+          </div>
+          <hr>
+        </div>
+<!--   
+        <div class="add-comment">
+          <h5>Dodaj komentarz</h5>
+          <form (submit)="addComment()">
+            <div class="mb-3">
+              <label for="commentAuthor" class="form-label">Imię</label>
+              <input type="text" id="commentAuthor" [(ngModel)]="newComment.author" name="author" class="form-control" placeholder="Twoje imię" required>
+            </div>
+            <div class="mb-3">
+              <label for="commentContent" class="form-label">Komentarz</label>
+              <textarea id="commentContent" [(ngModel)]="newComment.content" name="content" class="form-control" rows="3" placeholder="Napisz swój komentarz" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+          </form>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  

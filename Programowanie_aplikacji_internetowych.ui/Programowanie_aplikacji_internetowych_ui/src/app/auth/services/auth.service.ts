@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginModel } from '../models/login-model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -9,8 +9,8 @@ import { environment } from '../../../environments/environment.development';
 })
 export class AuthService {
 
-  private apiUrl : string = environment.apiUrl + "/User"
-
+  private apiUrl: string = environment.apiUrl + "/User";
+  isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(private httpClient: HttpClient) { }
   
   login(loginModel: LoginModel): Observable<HttpResponse<any>> {

@@ -75,7 +75,8 @@ public class PostService : IPostService
                     CreatedDate = x.MetaData.CreatedDate,
                     ModifiedById = x.MetaData.ModifiedById,
                     ModifiedDate = x.MetaData.ModifiedDate,
-                    UserId = x.MetaData.UserId
+                    UserId = x.MetaData.UserId,
+                    UserName = x.MetaData.User.Username
                 }
             }),
             MetaData = new MetaDataDto

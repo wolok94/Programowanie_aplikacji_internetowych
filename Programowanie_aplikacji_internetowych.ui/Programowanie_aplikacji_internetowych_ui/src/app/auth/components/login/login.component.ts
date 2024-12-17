@@ -34,6 +34,7 @@ export class LoginComponent {
 
         if(accessToken && refreshToken && accessTokenExpiresAt && refreshTokenExpiresAt){
           this.authService.saveTokens(accessToken, refreshToken, accessTokenExpiresAt, refreshTokenExpiresAt);
+          this.authService.isLogged.next(true);
         }
 
 
