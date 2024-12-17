@@ -66,7 +66,8 @@ public class PostService : IPostService
 
         var postDto = new GetPostByIdDto
         {
-            Comments = post.Comments.Select(x => new CommentDto
+            Comments = post.Comments.OrderByDescending(x => x.MetaData.CreatedDate).
+                                    Select(x => new CommentDto
             {
                 Id = x.Id,
                 Text = x.Text,

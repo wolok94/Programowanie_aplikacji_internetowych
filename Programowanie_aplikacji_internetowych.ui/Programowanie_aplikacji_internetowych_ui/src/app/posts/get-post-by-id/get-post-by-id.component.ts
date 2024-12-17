@@ -4,6 +4,8 @@ import { GetPostByIdModel } from '../models/get-post-by-id-model';
 import { ActivatedRoute } from '@angular/router';
 import { PostModule } from '../modules/post/post.module';
 import { CreateComment } from '../models/create-comment';
+import { MessageComponent } from "../../shared/components/message/message.component";
+import { MessageService } from '../../shared/services/message.service';
 
 @Component({
   selector: 'app-get-post-by-id',
@@ -18,31 +20,37 @@ export class GetPostByIdComponent implements OnInit {
   newComment: CreateComment = {
     postId: "",
     text: ""
-};
+  };
+
   ngOnInit(): void {
+    this.getPost()
+
+  }
+
+  constructor(private postService : PostService, private route: ActivatedRoute, private messageService : MessageService) {
+    
+  }
+
+  getPost() {
     let id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
       this.postService.getPostById(id).subscribe(response => {
         this.post = response;
-        console.log(this.post);
-        console.log(response);
+
       })
     }
-
-  }
-
-  constructor(private postService : PostService, private route: ActivatedRoute) {
-    
   }
 
   addComment() {
     if (this.newComment.text.trim() === '') {
-      throw new Error("Komentarz nie może być pusty.");
+      this.messageService.showMessage("Komentarz nie może być pusty", "error");
+      throw new Error("Komentarz nie może być pusty");
     }
       this.newComment.postId = this.post.id;
       this.postService.addCommentToPost(this.newComment).subscribe(response => {
-      console.log(response);
+        this.getPost();
+        this.messageService.showMessage("Pomyślnie dodano komentarz", "success");
       });
   }
 
