@@ -3,4 +3,5 @@ export interface MetaDataModel{
     modifiedById: string | null;
     createdDate: Date; 
     modifiedDate: Date | null;
+    userName: string;
 }

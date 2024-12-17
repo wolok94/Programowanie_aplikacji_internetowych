@@ -44,6 +44,7 @@ public class PostService : IPostService
         var posts = await _postRepository.GetAll();
         var postsDto = posts.Select(x => new GetPostsDto
         {
+            Id = x.Id,
             MetaData = new MetaDataDto
             {
                 CreatedDate = x.MetaData.CreatedDate,
@@ -65,7 +66,8 @@ public class PostService : IPostService
 
         var postDto = new GetPostByIdDto
         {
-            Comments = post.Comments.Select(x => new CommentDto
+            Comments = post.Comments.OrderByDescending(x => x.MetaData.CreatedDate).
+                                    Select(x => new CommentDto
             {
                 Id = x.Id,
                 Text = x.Text,
@@ -74,7 +76,8 @@ public class PostService : IPostService
                     CreatedDate = x.MetaData.CreatedDate,
                     ModifiedById = x.MetaData.ModifiedById,
                     ModifiedDate = x.MetaData.ModifiedDate,
-                    UserId = x.MetaData.UserId
+                    UserId = x.MetaData.UserId,
+                    UserName = x.MetaData.User.Username
                 }
             }),
             MetaData = new MetaDataDto

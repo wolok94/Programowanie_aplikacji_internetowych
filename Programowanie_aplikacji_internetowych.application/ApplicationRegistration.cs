@@ -22,6 +22,7 @@ public static class ApplicationRegistration
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IUserContextService, UserContextService>();
         services.AddScoped<IPostService, PostService>();
+        services.AddScoped<ICommentService, CommentService>();
         
 
 

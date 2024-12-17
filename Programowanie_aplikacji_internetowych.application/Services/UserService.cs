@@ -73,9 +73,8 @@ public class UserService : IUserService
 
     public async Task<Token> RefreshToken(string accessToken, string refreshToken )
     {
-        var userId = _userContextService.UserId;
-        var user = await _userRepository.GetById(userId.Value);
-        var token = await _tokenService.BuildToken(accessToken, refreshToken, user);
+
+        var token = await _tokenService.BuildToken(accessToken, refreshToken, null);
         return token;
     }
 }

@@ -10,6 +10,7 @@ namespace Programowanie_aplikacji_internetowych.domain.Dtos.MetaDatas;
 public class MetaDataDto
 {
     public Guid UserId { get; set; }
+    public string UserName { get; set; }
     public Guid? ModifiedById { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime? ModifiedDate { get; set; }
