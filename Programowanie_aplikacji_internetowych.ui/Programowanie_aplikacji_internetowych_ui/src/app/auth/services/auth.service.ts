@@ -10,8 +10,11 @@ import { environment } from '../../../environments/environment.development';
 export class AuthService {
 
   private apiUrl: string = environment.apiUrl + "/User";
-  isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  constructor(private httpClient: HttpClient) { }
+  isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.checkStoredLogin());
+  logged: boolean = false;;
+  constructor(private httpClient: HttpClient, ) { 
+
+  }
   
   login(loginModel: LoginModel): Observable<HttpResponse<any>> {
     return this.httpClient.post<HttpResponse<any>>(this.apiUrl + "/Login", loginModel, { observe: 'response' });
@@ -32,6 +35,10 @@ export class AuthService {
     localStorage.removeItem('refreshTokenExpiresAt');
 
 
+  }
+
+  private checkStoredLogin(): boolean {
+    return localStorage.getItem('isLoggedIn') === 'true';
   }
 
 }

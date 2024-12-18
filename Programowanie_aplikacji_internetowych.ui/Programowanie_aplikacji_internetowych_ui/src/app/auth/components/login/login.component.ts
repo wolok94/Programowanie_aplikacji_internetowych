@@ -37,6 +37,9 @@ export class LoginComponent {
           this.authService.isLogged.next(true);
         }
 
+        localStorage.setItem('isLoggedIn', 'true');
+        this.authService.isLogged.next(true);
+
 
         this.router.navigate(['/posts']);
         console.log(response);
