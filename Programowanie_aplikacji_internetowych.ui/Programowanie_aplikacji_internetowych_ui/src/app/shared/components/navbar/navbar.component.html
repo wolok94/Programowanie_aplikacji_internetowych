@@ -1,13 +1,14 @@
 <nav class="navbar bg-dark navbar-expand-lg fixed-top" data-bs-theme="dark">
   <div class="container-fluid">
-      <a class="navbar-brand" href="#">Start</a>
+      <a class="navbar-brand" routerLink="posts">Start</a>
+      <div class="navbar-brand pointer" routerLink="createPost"><i class="fas fa-plus-square"></i> Dodaj post</div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
               <li class="nav-item" *ngIf="isLogged; else notLoggedIn">
-                  <a class="nav-link active" aria-current="page" routerLink='login'>Wyloguj się</a>
+                  <div (click)="logout()" class="nav-link active pointer" aria-current="page" routerLink='login'>Wyloguj się</div>
               </li>
               <ng-template #notLoggedIn>
                 <li class="nav-item">

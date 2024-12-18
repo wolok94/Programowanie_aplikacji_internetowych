@@ -1,6 +1,7 @@
 <div class="container mt-5">
   <div class="post-details card mb-4">
-    <div class="card-header bg-primary text-white">
+
+    <div class="card-header bg-dark text-info">
       <h2>{{ post.title }}</h2>
     </div>
     <div class="card-body">
@@ -11,7 +12,8 @@
   </div>
 
   <div class="comments-section card mt-4">
-    <div class="card-header bg-secondary text-white">
+
+    <div class="card-header bg-dark text-info">
       <h4>Komentarze</h4>
     </div>
     <div class="card-body">
@@ -50,9 +52,10 @@
             required>
           </textarea>
         </div>
+
         <button 
           (click)="addComment()" 
-          class="btn btn-primary" 
+          class="btn btn-info text-white" 
           [disabled]="!newComment.text || newComment.text.trim() === ''">
           Dodaj komentarz
         </button>

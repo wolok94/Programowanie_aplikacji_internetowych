@@ -42,7 +42,8 @@ public class PostService : IPostService
     public async Task<IEnumerable<GetPostsDto>> GetAllPosts()
     {
         var posts = await _postRepository.GetAll();
-        var postsDto = posts.Select(x => new GetPostsDto
+        var postsDto = posts.OrderByDescending(x => x.MetaData.CreatedDate)
+            .Select(x => new GetPostsDto
         {
             Id = x.Id,
             MetaData = new MetaDataDto

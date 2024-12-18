@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../modules/shared/shared.module';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,8 +21,14 @@ export class NavbarComponent implements OnInit {
     })
   }
 
-  constructor(private authService : AuthService) {
+  constructor(private authService : AuthService, private router : Router, private messageService : MessageService) {
     
+  }
+
+  logout() {
+    this.authService.removeTokens();
+    this.router.navigate(['/login']);
+    this.messageService.showMessage("Zostałeś wylogowany", "info");
   }
 
 

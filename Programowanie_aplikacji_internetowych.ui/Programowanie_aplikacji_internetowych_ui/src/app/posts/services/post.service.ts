@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs/internal/Observable';
 import { GetPostByIdModel } from '../models/get-post-by-id-model';
 import { CreateComment } from '../models/create-comment';
+import { CreatePost } from '../models/create-post-model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class PostService {
 
   addCommentToPost(comment : CreateComment): Observable<void>{
     return this.httpClient.post<void>(environment.apiUrl + "/comment/createComment", comment);
+  }
+
+  createPost(post : CreatePost):Observable<void> {
+    return this.httpClient.post<void>(this.apiUrl + "/createPost", post);
   }
 }

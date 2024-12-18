@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginModel } from '../../models/login-model';
 import { Router } from '@angular/router';
+import { MessageService } from '../../../shared/services/message.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private authService : AuthService, private fb: FormBuilder, private router : Router) {
+  constructor(private authService : AuthService, private fb: FormBuilder, private router : Router, private messageService : MessageService) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]], 
@@ -37,12 +38,9 @@ export class LoginComponent {
           this.authService.isLogged.next(true);
         }
 
-        localStorage.setItem('isLoggedIn', 'true');
-        this.authService.isLogged.next(true);
-
 
         this.router.navigate(['/posts']);
-        console.log(response);
+        this.messageService.showMessage("Pomyślnie się zalogowano", "success");
       });
     } 
   }

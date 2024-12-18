@@ -26,6 +26,8 @@ export class AuthService {
     localStorage.setItem('refreshToken', refreshToken);
     localStorage.setItem('accessTokenExpiresAt', accessTokenExpiresAt.toString());
     localStorage.setItem('refreshTokenExpiresAt', refreshTokenExpiresAt.toString());
+    localStorage.setItem('isLoggedIn', 'true');
+    this.isLogged.next(true);
   }
 
   removeTokens(){
@@ -33,8 +35,8 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('accessTokenExpiresAt');
     localStorage.removeItem('refreshTokenExpiresAt');
-
-
+    localStorage.removeItem('isLoggedIn');
+    this.isLogged.next(false);
   }
 
   private checkStoredLogin(): boolean {
