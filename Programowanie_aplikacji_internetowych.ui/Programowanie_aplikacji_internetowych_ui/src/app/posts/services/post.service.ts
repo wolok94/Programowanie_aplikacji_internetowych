@@ -31,4 +31,8 @@ export class PostService {
   createPost(post : CreatePost):Observable<void> {
     return this.httpClient.post<void>(this.apiUrl + "/createPost", post);
   }
+
+  createPostFromCsv(file: FormData):Observable<void> {
+    return this.httpClient.post<void>(this.apiUrl + "/createFromCsv", file);
+  }
 }

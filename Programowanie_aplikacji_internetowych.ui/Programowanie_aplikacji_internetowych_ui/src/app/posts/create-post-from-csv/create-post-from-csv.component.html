@@ -1,0 +1,19 @@
+<div class="container mt-4">
+    <h2 class="mb-3">Dodaj posty z pliku CSV</h2>
+  
+    <form (submit)="onSubmit()">
+      <div class="mb-3">
+        <label for="fileInput" class="form-label">Wybierz plik CSV:</label>
+        <input
+          type="file"
+          id="fileInput"
+          class="form-control"
+          (change)="onFileSelected($event)"
+          required
+          accept=".csv"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!selectedFile">Prześlij</button>
+    </form>
+  </div>
+  

@@ -1,4 +1,6 @@
-﻿using Programowanie_aplikacji_internetowych.domain.Dtos.Comments;
+﻿using Microsoft.AspNetCore.Http;
+using Programowanie_aplikacji_internetowych.application.Shared;
+using Programowanie_aplikacji_internetowych.domain.Dtos.Comments;
 using Programowanie_aplikacji_internetowych.domain.Dtos.MetaDatas;
 using Programowanie_aplikacji_internetowych.domain.Dtos.Posts;
 using Programowanie_aplikacji_internetowych.domain.Entities;
@@ -6,6 +8,7 @@ using Programowanie_aplikacji_internetowych.domain.Interfaces.Repository;
 using Programowanie_aplikacji_internetowych.domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,5 +115,24 @@ public class PostService : IPostService
         post.MetaData.ModifiedById = _userContext.UserId;
         post.ImageUrl = postDto.ImageUrl;
         await _postRepository.UpdateAsync(post);
+    }
+
+    public async Task<IEnumerable<Post>> CreatePostFromCsv(IFormFile file)
+    {
+        var posts = CsvReader.ReadPosts(file);
+        var newPosts = posts.Select(x => new Post
+        {
+            Title = x.Title,
+            Text = x.Title,
+            ImageUrl = x.ImageUrl,
+            MetaData = new MetaData
+            {
+                CreatedDate = DateTime.Now,
+                UserId = _userContext.UserId.Value
+            }
+        });
+
+        await _postRepository.AddRangeAsync(newPosts);
+        return newPosts;
     }
 }

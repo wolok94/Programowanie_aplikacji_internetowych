@@ -60,4 +60,12 @@ public class PostController : Controller
         await _postService.UpdatePost(id, postDto);
         return Ok();
     }
+
+    [HttpPost]
+    [Route("createFromCsv")]
+    public async Task<IActionResult> CreateFromCsv([FromForm] IFormFile file)
+    {
+         _postService.CreatePostFromCsv(file);
+        return Ok();
+    }
 }
