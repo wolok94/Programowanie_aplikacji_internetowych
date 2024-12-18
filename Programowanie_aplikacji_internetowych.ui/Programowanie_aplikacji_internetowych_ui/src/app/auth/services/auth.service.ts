@@ -10,8 +10,11 @@ import { environment } from '../../../environments/environment.development';
 export class AuthService {
 
   private apiUrl: string = environment.apiUrl + "/User";
-  isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  constructor(private httpClient: HttpClient) { }
+  isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.checkStoredLogin());
+  logged: boolean = false;;
+  constructor(private httpClient: HttpClient, ) { 
+
+  }
   
   login(loginModel: LoginModel): Observable<HttpResponse<any>> {
     return this.httpClient.post<HttpResponse<any>>(this.apiUrl + "/Login", loginModel, { observe: 'response' });
@@ -23,6 +26,8 @@ export class AuthService {
     localStorage.setItem('refreshToken', refreshToken);
     localStorage.setItem('accessTokenExpiresAt', accessTokenExpiresAt.toString());
     localStorage.setItem('refreshTokenExpiresAt', refreshTokenExpiresAt.toString());
+    localStorage.setItem('isLoggedIn', 'true');
+    this.isLogged.next(true);
   }
 
   removeTokens(){
@@ -30,8 +35,12 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('accessTokenExpiresAt');
     localStorage.removeItem('refreshTokenExpiresAt');
+    localStorage.removeItem('isLoggedIn');
+    this.isLogged.next(false);
+  }
 
-
+  private checkStoredLogin(): boolean {
+    return localStorage.getItem('isLoggedIn') === 'true';
   }
 
 }

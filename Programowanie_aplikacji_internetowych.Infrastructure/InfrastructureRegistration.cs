@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Programowanie_aplikacji_internetowych.domain.Interfaces.Repository;
-using Programowanie_aplikacji_internetowych.domain.Interfaces.Services;
 using Programowanie_aplikacji_internetowych.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
