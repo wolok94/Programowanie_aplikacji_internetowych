@@ -42,7 +42,8 @@ public class UserService : IUserService
             Email = registerUserDto.Email,
             FirstName = registerUserDto.FirstName,
             LastName = registerUserDto.LastName,
-            Username = registerUserDto.Username
+            Username = registerUserDto.Username,
+            RoleId = registerUserDto.RoleId
         };
         user.Password = _passwordHasher.HashPassword(user, registerUserDto.Password);
 
@@ -51,7 +52,7 @@ public class UserService : IUserService
 
     public async Task<Token> Login(LoginUserDto loginUserDto)
     {
-        var user = await _userRepository.Login(loginUserDto.Password);
+        var user = await _userRepository.Login(loginUserDto.UserName);
         if (user == null)
         {
             throw new ArgumentException("Nie ma takiego użytkownika");
@@ -73,8 +74,13 @@ public class UserService : IUserService
 
     public async Task<Token> RefreshToken(string accessToken, string refreshToken )
     {
-
-        var token = await _tokenService.BuildToken(accessToken, refreshToken, null);
+        var userId = _userContextService.UserId;
+        var user = await _userRepository.GetById(userId.Value);
+        if (user == null)
+        {
+            throw new ArgumentException("Nie ma takiego użytkownika");
+        }
+        var token = await _tokenService.BuildToken(accessToken, refreshToken, user);
         return token;
     }
 }

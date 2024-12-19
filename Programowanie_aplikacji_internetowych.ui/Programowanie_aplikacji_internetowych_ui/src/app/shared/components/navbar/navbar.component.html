@@ -1,7 +1,7 @@
 <nav class="navbar bg-dark navbar-expand-lg fixed-top" data-bs-theme="dark">
   <div class="container-fluid">
       <a class="navbar-brand" routerLink="posts">Start</a>
-      <div class="navbar-brand pointer" routerLink="createPost"><i class="fas fa-plus-square"></i> Dodaj post</div>
+      <div *ngIf="isAdmin" class="navbar-brand pointer" routerLink="createPost"><i class="fas fa-plus-square"></i> Dodaj post</div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>

@@ -161,7 +161,7 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("RoleId")
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
@@ -235,9 +235,13 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
 
             modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.User", b =>
                 {
-                    b.HasOne("Programowanie_aplikacji_internetowych.domain.Entities.Role", null)
+                    b.HasOne("Programowanie_aplikacji_internetowych.domain.Entities.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.Post", b =>

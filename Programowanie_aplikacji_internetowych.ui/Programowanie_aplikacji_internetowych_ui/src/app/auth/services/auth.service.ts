@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { LoginModel } from '../models/login-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
+import * as jwt_decode from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AuthService {
 
   private apiUrl: string = environment.apiUrl + "/User";
   isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.checkStoredLogin());
-  logged: boolean = false;;
+  logged: boolean = false;
+  isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(private httpClient: HttpClient, ) { 
 
   }
@@ -37,6 +39,14 @@ export class AuthService {
     localStorage.removeItem('refreshTokenExpiresAt');
     localStorage.removeItem('isLoggedIn');
     this.isLogged.next(false);
+  }
+
+  checkRole(accessToken : string) {
+    const decodedToken = accessToken ? jwt_decode.jwtDecode(accessToken) : null;
+    let decodedTokenJson = JSON.parse(JSON.stringify(decodedToken));
+    let role = decodedTokenJson["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    return role === "Admin";
+
   }
 
   private checkStoredLogin(): boolean {

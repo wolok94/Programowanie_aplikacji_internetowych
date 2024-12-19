@@ -15,7 +15,8 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                 name: "RoleId",
                 table: "Users",
                 type: "TEXT",
-                nullable: true);
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.CreateTable(
                 name: "Roles",
@@ -39,7 +40,8 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                 table: "Users",
                 column: "RoleId",
                 principalTable: "Roles",
-                principalColumn: "Id");
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
