@@ -16,8 +16,11 @@ export class PostsComponent implements OnInit{
   posts: GetPostsModel[] = [];
 
   ngOnInit(): void {
+    console.log("haha");
     this.postService.getPosts().subscribe(response => {
+      console.log(response);
       this.posts = response;
+
     })
   }
 

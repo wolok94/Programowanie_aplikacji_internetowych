@@ -123,7 +123,7 @@ public class PostService : IPostService
         var newPosts = posts.Select(x => new Post
         {
             Title = x.Title,
-            Text = x.Title,
+            Text = x.Text,
             ImageUrl = x.ImageUrl,
             MetaData = new MetaData
             {

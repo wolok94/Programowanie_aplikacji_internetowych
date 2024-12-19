@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Programowanie_aplikacji_internetowych.application;
 using Programowanie_aplikacji_internetowych.Infrastructure;
+using Programowanie_aplikacji_internetowych.Infrastructure.Seeders;
 using Programowanie_aplikacji_internetowych.webapi.Middleware;
 using System.Text;
 
@@ -46,7 +47,9 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<RoleSeeder>();
+await seeder.SeedRoles();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
