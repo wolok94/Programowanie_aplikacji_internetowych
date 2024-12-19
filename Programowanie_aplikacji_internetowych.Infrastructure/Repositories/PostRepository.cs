@@ -26,10 +26,13 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
                         .ToListAsync();
     }
 
-    public override async Task<Post> GetById(Guid id) => await _dbContext.Posts
+    public override async Task<Post> GetById(Guid id) {
+        var post = await _dbContext.Posts
             .Include(x => x.MetaData)
             .ThenInclude(x => x.User)
             .Include(x => x.Comments)
             .ThenInclude(x => x.MetaData)
             .FirstOrDefaultAsync(x => x.Id == id);
+        return post;
+    } 
 }

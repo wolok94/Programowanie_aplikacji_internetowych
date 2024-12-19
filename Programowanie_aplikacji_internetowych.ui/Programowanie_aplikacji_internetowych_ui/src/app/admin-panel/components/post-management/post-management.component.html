@@ -1,0 +1,29 @@
+<div class="card">
+    <div class="card-header bg-secondary text-white">
+      <h5>Zarządzanie Postami</h5>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Zdjęcie</th>
+            <th>Nazwa Postu</th>
+            <th>Opcje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let post of posts">
+            <td>
+              <img [src]="post.imageUrl" alt="Post Image" class="img-thumbnail" style="width: 100px;">
+            </td>
+            <td>{{ post.title }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm me-2" (click)="editPost(post.id)">Edytuj</button>
+              <button class="btn btn-danger btn-sm" (click)="deletePost(post.id)">Usuń</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

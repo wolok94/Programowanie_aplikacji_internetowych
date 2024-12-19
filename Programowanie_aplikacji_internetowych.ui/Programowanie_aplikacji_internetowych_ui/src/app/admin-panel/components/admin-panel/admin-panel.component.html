@@ -1,0 +1,41 @@
+<div class="container mt-5">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white text-center">
+            <h5 class="mb-0">Panel Administracyjny</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item list-group-item-action"
+              [class.active]="activeSection === 'posts'"
+              (click)="showSection('posts')"
+            >
+              <i class="bi bi-pencil-square me-2"></i> Zarządzanie Postami
+            </li>
+            <li
+              class="list-group-item list-group-item-action"
+              [class.active]="activeSection === 'users'"
+              (click)="showSection('users')"
+            >
+              <i class="bi bi-people-fill me-2"></i> Zarządzanie Użytkownikami
+            </li>
+          </ul>
+        </div>
+      </div>
+  
+      <!-- Main Content -->
+      <div class="col-md-9">
+        <div class="card shadow">
+          <div class="card-body">
+            <ng-container *ngIf="activeSection === 'posts'">
+              <app-post-management></app-post-management>
+            </ng-container>
+            <ng-container *ngIf="activeSection === 'users'">
+              <app-user-management></app-user-management>
+            </ng-container>
+          </div>
+        </div>
+   
+  

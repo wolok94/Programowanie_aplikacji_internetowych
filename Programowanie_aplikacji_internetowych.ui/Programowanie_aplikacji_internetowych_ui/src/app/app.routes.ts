@@ -7,6 +7,7 @@ import { authGuard } from './auth/guards/auth.guard';
 import { CreatePostComponent } from './posts/create-post/create-post.component';
 import { CreatePostFromCsvComponent } from './posts/create-post-from-csv/create-post-from-csv.component';
 import { adminGuard } from './auth/guards/admin.guard';
+import { AdminPanelComponent } from './admin-panel/components/admin-panel/admin-panel.component';
 
 export const routes: Routes = [
     {path: "", component: PostsComponent, canActivate: [authGuard]},
@@ -14,6 +15,8 @@ export const routes: Routes = [
     { path: "posts", component: PostsComponent, canActivate: [authGuard] },
     { path: "post/:id", component: GetPostByIdComponent, canActivate: [authGuard] },
     {path: "createPost", component: CreatePostComponent, canActivate: [authGuard, adminGuard]},
-    {path: "createPostFromCsv", component: CreatePostFromCsvComponent, canActivate: [authGuard, adminGuard]},
+    {path: "updatePost/:id", component: CreatePostComponent, canActivate: [authGuard, adminGuard]},
+    { path: "createPostFromCsv", component: CreatePostFromCsvComponent, canActivate: [authGuard, adminGuard] },
+    {path: "adminPanel", component: AdminPanelComponent, canActivate: [authGuard, adminGuard]}
     
 ];
