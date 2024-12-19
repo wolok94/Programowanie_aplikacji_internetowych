@@ -19,6 +19,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Post> Posts { get; set; }
+    public DbSet<Role> Roles { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -6,7 +6,7 @@ using Programowanie_aplikacji_internetowych.domain.Interfaces.Services;
 namespace Programowanie_aplikacji_internetowych.webapi.Controllers
 {
     [ApiController]
-    [Route("api/User")]
+    [Route("api/Users")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -70,6 +70,13 @@ namespace Programowanie_aplikacji_internetowych.webapi.Controllers
             Response.Headers.Add("X-Refresh-Token-ExpiresAt", token.RefreshToken.ExpiryDate.ToString());
 
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _userService.GetUsers();
+            return Ok(users);
         }
     }
 }

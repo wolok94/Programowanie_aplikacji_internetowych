@@ -21,7 +21,16 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public async Task<User> Login(string username)
     {
-        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == username);
+        var user = await _dbContext.Users
+            .Include(x => x.Role)
+            .FirstOrDefaultAsync(x => x.Username == username);
         return user;
+    }
+
+    public override async Task<IEnumerable<User>> GetAll()
+    {
+        return await _dbContext.Users
+            .Include(x => x.Role)
+            .ToListAsync();
     }
 }

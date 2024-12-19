@@ -11,6 +11,7 @@ namespace Programowanie_aplikacji_internetowych.domain.Interfaces.Services;
 
 public interface IUserService
 {
+    Task<IEnumerable<GetUsersDto>> GetUsers();
     Task<Token> Login(LoginUserDto loginUserDto);
     Task<Token> RefreshToken(string accessToken, string refreshToken);
     Task Register(RegisterUserDto registerUserDto);

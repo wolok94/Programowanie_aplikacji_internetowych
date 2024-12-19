@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { GetPostByIdModel } from '../models/get-post-by-id-model';
 import { CreateComment } from '../models/create-comment';
 import { CreatePost } from '../models/create-post-model';
+import { UpdatePost } from '../models/update-post-model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,13 @@ export class PostService {
 
   createPostFromCsv(file: FormData):Observable<void> {
     return this.httpClient.post<void>(this.apiUrl + "/createFromCsv", file);
+  }
+
+  deletePost(postId: string): Observable<void>{
+    return this.httpClient.delete<void>(this.apiUrl + "/delete/" + postId);
+  }
+
+  updatePost(postId: string, post: UpdatePost): Observable<void>{
+    return this.httpClient.patch<void>(this.apiUrl + "/update/" + postId, post);
   }
 }

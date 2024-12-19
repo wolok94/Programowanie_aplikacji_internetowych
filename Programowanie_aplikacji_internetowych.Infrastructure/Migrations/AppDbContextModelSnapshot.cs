@@ -124,6 +124,21 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -146,11 +161,16 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -213,9 +233,25 @@ namespace Programowanie_aplikacji_internetowych.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.User", b =>
+                {
+                    b.HasOne("Programowanie_aplikacji_internetowych.domain.Entities.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Programowanie_aplikacji_internetowych.domain.Entities.User", b =>

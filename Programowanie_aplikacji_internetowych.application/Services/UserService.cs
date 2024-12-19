@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Programowanie_aplikacji_internetowych.domain.Dtos.RefreshTokens;
+using Programowanie_aplikacji_internetowych.domain.Dtos.Roles;
 using Programowanie_aplikacji_internetowych.domain.Dtos.Users;
 using Programowanie_aplikacji_internetowych.domain.Entities;
 using Programowanie_aplikacji_internetowych.domain.Exceptions;
@@ -42,7 +43,8 @@ public class UserService : IUserService
             Email = registerUserDto.Email,
             FirstName = registerUserDto.FirstName,
             LastName = registerUserDto.LastName,
-            Username = registerUserDto.Username
+            Username = registerUserDto.Username,
+            RoleId = registerUserDto.RoleId
         };
         user.Password = _passwordHasher.HashPassword(user, registerUserDto.Password);
 
@@ -51,7 +53,7 @@ public class UserService : IUserService
 
     public async Task<Token> Login(LoginUserDto loginUserDto)
     {
-        var user = await _userRepository.Login(loginUserDto.Password);
+        var user = await _userRepository.Login(loginUserDto.UserName);
         if (user == null)
         {
             throw new ArgumentException("Nie ma takiego użytkownika");
@@ -73,8 +75,33 @@ public class UserService : IUserService
 
     public async Task<Token> RefreshToken(string accessToken, string refreshToken )
     {
-
-        var token = await _tokenService.BuildToken(accessToken, refreshToken, null);
+        var userId = _userContextService.UserId;
+        var user = await _userRepository.GetById(userId.Value);
+        if (user == null)
+        {
+            throw new ArgumentException("Nie ma takiego użytkownika");
+        }
+        var token = await _tokenService.BuildToken(accessToken, refreshToken, user);
         return token;
+    }
+
+    public async Task<IEnumerable<GetUsersDto>> GetUsers()
+    {
+        var users = await _userRepository.GetAll();
+        var mappedUsers = users.Select(x => new GetUsersDto
+        {
+            Id = x.Id,
+            FirstName = x.FirstName,
+            LastName = x.LastName,
+            Role = new RoleDto
+            {
+                Id = x.Role.Id,
+                Name = x.Role.Name
+            },
+            UserName = x.Username,
+
+        });
+        return mappedUsers;
+
     }
 }

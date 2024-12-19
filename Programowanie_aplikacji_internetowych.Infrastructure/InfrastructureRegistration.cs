@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Programowanie_aplikacji_internetowych.domain.Interfaces.Repository;
 using Programowanie_aplikacji_internetowych.Infrastructure.Repositories;
+using Programowanie_aplikacji_internetowych.Infrastructure.Seeders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ public static class InfrastructureRegistration
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPostRepository, PostRepository>();
         services.AddScoped<ICommentRepository, CommentRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
+        services.AddScoped<RoleSeeder>();
 
 
         return services;

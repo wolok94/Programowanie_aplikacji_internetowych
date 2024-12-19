@@ -14,10 +14,15 @@ import { MessageService } from '../../services/message.service';
 export class NavbarComponent implements OnInit {
 
   isLogged = false;
+  isAdmin = false;
 
   ngOnInit(): void {
     this.authService.isLogged.subscribe(value => {
       this.isLogged = value;
+    })
+
+    this.authService.isAdmin.subscribe(value => {
+      this.isAdmin = value;
     })
   }
 

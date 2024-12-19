@@ -1,0 +1,17 @@
+.card {
+    border-radius: 8px;
+  }
+  
+  .card-header {
+    font-weight: bold;
+  }
+  
+  .list-group-item {
+    cursor: pointer;
+  }
+  
+  .list-group-item.active {
+    background-color: #0d6efd;
+    color: white;
+    font-weight: bold;
+  }

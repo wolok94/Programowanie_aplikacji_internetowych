@@ -32,19 +32,18 @@ namespace Programowanie_aplikacji_internetowych.application.Services
         {
             if (refreshToken != null && accessToken != null)
             {
-                return await RefreshExistingToken(accessToken, refreshToken);
+                return await RefreshExistingToken(accessToken, refreshToken, user);
             }
 
             return await GenerateNewToken(user);
         }
 
-        private async Task<Token> RefreshExistingToken(string accessToken, string refreshToken)
+        private async Task<Token> RefreshExistingToken(string accessToken, string refreshToken, User user)
         {
             var principal = GetPrincipalFromExpiredToken(accessToken);
-            var userId = Guid.Parse(principal.Identity.GetUserId());
             var oldRefreshToken = await _dbContext.RefreshTokens.FirstOrDefaultAsync(x => x.Token == refreshToken);
 
-            if (oldRefreshToken == null)
+            if (oldRefreshToken == null || oldRefreshToken.User.Id != user.Id)
             {
                 throw new SecurityTokenException("Invalid refresh token");
             }
@@ -66,6 +65,7 @@ namespace Programowanie_aplikacji_internetowych.application.Services
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.Name)
             };
 
             var newRefreshTokenDto = GenerateRefreshToken();

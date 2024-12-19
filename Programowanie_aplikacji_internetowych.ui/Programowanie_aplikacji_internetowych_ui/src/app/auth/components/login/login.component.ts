@@ -36,6 +36,8 @@ export class LoginComponent {
         if(accessToken && refreshToken && accessTokenExpiresAt && refreshTokenExpiresAt){
           this.authService.saveTokens(accessToken, refreshToken, accessTokenExpiresAt, refreshTokenExpiresAt);
           this.authService.isLogged.next(true);
+          let isAdmin = this.authService.checkRole(accessToken);
+          this.authService.isAdmin.next(isAdmin);
         }
 
 
