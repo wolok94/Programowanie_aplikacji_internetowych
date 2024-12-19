@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Programowanie_aplikacji_internetowych.domain.Dtos.Roles
+namespace Programowanie_aplikacji_internetowych.domain.Dtos.Roles;
+
+public class RoleDto
 {
-    internal class RoleDto
-    {
-    }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
 }

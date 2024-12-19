@@ -1,1 +1,28 @@
-<p>user-management works!</p>
+<h3 class="mb-4">Zarządzanie Użytkownikami</h3>
+<div *ngIf="users.length > 0; else noUsers">
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Nazwa Użytkownika</th>
+        <th>Rola</th>
+        <th>Opcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.userName }}</td>
+        <td>
+          <select [(ngModel)]="user.role" class="form-select form-select-sm">
+            <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn btn-success btn-sm" (click)="updateUserRole(user.id)">Zapisz</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #noUsers>
+  <p class="text-muted">Brak użytkowników do wyświetlenia.</p>
+</ng-template>

@@ -24,6 +24,7 @@ public static class InfrastructureRegistration
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPostRepository, PostRepository>();
         services.AddScoped<ICommentRepository, CommentRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<RoleSeeder>();
 
 

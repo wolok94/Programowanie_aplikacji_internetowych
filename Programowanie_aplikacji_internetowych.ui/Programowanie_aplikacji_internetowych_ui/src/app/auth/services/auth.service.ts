@@ -10,7 +10,7 @@ import * as jwt_decode from "jwt-decode";
 })
 export class AuthService {
 
-  private apiUrl: string = environment.apiUrl + "/User";
+  private apiUrl: string = environment.apiUrl + "/Users";
   isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.checkStoredLogin());
   logged: boolean = false;
   isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

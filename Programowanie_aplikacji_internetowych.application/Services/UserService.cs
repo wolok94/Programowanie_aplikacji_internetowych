@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Programowanie_aplikacji_internetowych.domain.Dtos.RefreshTokens;
+using Programowanie_aplikacji_internetowych.domain.Dtos.Roles;
 using Programowanie_aplikacji_internetowych.domain.Dtos.Users;
 using Programowanie_aplikacji_internetowych.domain.Entities;
 using Programowanie_aplikacji_internetowych.domain.Exceptions;
@@ -82,5 +83,25 @@ public class UserService : IUserService
         }
         var token = await _tokenService.BuildToken(accessToken, refreshToken, user);
         return token;
+    }
+
+    public async Task<IEnumerable<GetUsersDto>> GetUsers()
+    {
+        var users = await _userRepository.GetAll();
+        var mappedUsers = users.Select(x => new GetUsersDto
+        {
+            Id = x.Id,
+            FirstName = x.FirstName,
+            LastName = x.LastName,
+            Role = new RoleDto
+            {
+                Id = x.Role.Id,
+                Name = x.Role.Name
+            },
+            UserName = x.Username,
+
+        });
+        return mappedUsers;
+
     }
 }
