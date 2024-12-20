@@ -12,12 +12,12 @@
       <tr *ngFor="let user of users">
         <td>{{ user.userName }}</td>
         <td>
-          <select [(ngModel)]="user.role" class="form-select form-select-sm">
+          <select [(ngModel)]="user.role.id" class="form-select form-select-sm">
             <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
           </select>
         </td>
         <td>
-          <button class="btn btn-success btn-sm" (click)="updateUserRole(user.id)">Zapisz</button>
+          <button class="btn btn-success btn-sm" (click)="updateUserRole(user)">Zapisz</button>
         </td>
       </tr>
     </tbody>

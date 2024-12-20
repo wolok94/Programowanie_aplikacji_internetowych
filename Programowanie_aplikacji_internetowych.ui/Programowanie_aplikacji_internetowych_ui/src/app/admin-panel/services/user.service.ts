@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment.development';
 import { GetUsersModel } from '../models/get-users-model';
 import { RoleModel } from '../models/role-model';
 import { Observable } from 'rxjs';
+import { ChangeRole } from '../models/change-role-model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,9 @@ export class UserService {
 
   getRoles(): Observable<RoleModel[]>{
     return this.httpClient.get<RoleModel[]>(environment.apiUrl + "/roles");
+  }
+
+  updateUser(changeRole : ChangeRole): Observable<void>{
+    return this.httpClient.patch<void>(this.apiUrl + "/changeRole", changeRole);
   }
 }

@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { PostService } from '../services/post.service';
 import { CreatePost } from '../models/create-post-model';
 import { MessageService } from '../../shared/services/message.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { GetPostByIdModel } from '../models/get-post-by-id-model';
 
 @Component({
@@ -21,11 +21,14 @@ export class CreatePostComponent {
   postForm: FormGroup;
   submittedPost: { title: string; text: string; imageUrl: string } | null = null;
   isEditMode: boolean = false;
+  postId!: string;
 
-  constructor(private fb: FormBuilder, private postService: PostService, private messageService: MessageService, private route : ActivatedRoute) {
-    let id = this.route.snapshot.paramMap.get('id');
+  constructor(private fb: FormBuilder, private postService: PostService, private messageService: MessageService, private activatedRoute: ActivatedRoute
+    , private route : Router) {
+    let id = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (id) {
+      this.postId = id;
       this.postService.getPostById(id).subscribe(response => {
         this.post = response;
         this.isEditMode = this.post !== null;
@@ -48,10 +51,30 @@ export class CreatePostComponent {
   onSubmit(): void {
     if (this.postForm.valid) {
       let post: CreatePost = this.postForm.value;
-      this.postService.createPost(post).subscribe(response => {
-        this.messageService.showMessage("Pomyślnie dodano post", "success");
-      })
+      if (this.post) {
+        this.postService.updatePost(this.postId, post).subscribe({
+          next: () => {
+            this.messageService.showMessage("Pomyślnie zaktualizowano post", "success");
+          }, error: (err) => {
+            this.messageService.showMessage("Wystąpił błąd podczas aktualizowania postu. Spróbuj ponownie.", "error");
+          }
+        })
+      } else {
+        this.postService.createPost(post).subscribe({
+          next: () => {
+            this.messageService.showMessage("Pomyślnie dodano post", "success");
+          }, error: (err) => {
+            this.messageService.showMessage("Wystąpił błąd podczas dodawania postu. Spróbuj ponownie.", "error");
+          }
+
+        })
+      }
+
       this.postForm.reset();
     }
+  }
+
+  navigateToCsv() {
+    this.route.navigate(["/createPostFromCsv"])
   }
 }

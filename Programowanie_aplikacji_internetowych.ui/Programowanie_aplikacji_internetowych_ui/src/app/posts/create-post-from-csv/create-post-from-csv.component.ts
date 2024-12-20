@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PostModule } from '../modules/post/post.module';
 import { PostService } from '../services/post.service';
+import { MessageService } from '../../shared/services/message.service';
 
 @Component({
   selector: 'app-create-post-from-csv',
@@ -15,7 +16,7 @@ export class CreatePostFromCsvComponent {
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private messageService : MessageService) {}
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -40,8 +41,13 @@ export class CreatePostFromCsvComponent {
 
     console.log('FormData zawiera:', formData);
 
-    this.postService.createPostFromCsv(formData).subscribe(response => {
-      console.log(response);
+    this.postService.createPostFromCsv(formData).subscribe({
+      next: () => {
+        this.messageService.showMessage("Pomyślnie dodano posty", "success");
+      }, error: (err) => {
+        this.messageService.showMessage("Wystąpił błąd podczas dodawania postów. Spróbuj ponownie.", "error");
+      }
+
     });
   }
 }

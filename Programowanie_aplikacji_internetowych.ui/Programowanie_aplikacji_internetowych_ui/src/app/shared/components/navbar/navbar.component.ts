@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
     this.authService.isLogged.subscribe(value => {
       this.isLogged = value;
     })
+    this.authService.checkRole();
 
     this.authService.isAdmin.subscribe(value => {
       this.isAdmin = value;

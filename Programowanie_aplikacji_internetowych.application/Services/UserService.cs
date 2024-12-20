@@ -104,4 +104,11 @@ public class UserService : IUserService
         return mappedUsers;
 
     }
+
+    public async Task ChangeRole(ChangeRoleForUserDto changRole)
+    {
+        var user = await _userRepository.GetById(changRole.UserId);
+        user.RoleId = changRole.RoleId;
+        await _userRepository.UpdateAsync(user);
+    }
 }
