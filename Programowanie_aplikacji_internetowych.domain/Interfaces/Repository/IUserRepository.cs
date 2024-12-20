@@ -9,5 +9,6 @@ namespace Programowanie_aplikacji_internetowych.domain.Interfaces.Repository;
 
 public interface IUserRepository : IGenericRepository<User>
 {
+    Task<User> GetByRefreshToken(string refreshToken);
     Task<User> Login(string username);
 }

@@ -11,7 +11,7 @@ namespace Programowanie_aplikacji_internetowych.webapi.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ITokenService tokenService)
         {
             _userService = userService;
         }
