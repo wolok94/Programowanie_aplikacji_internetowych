@@ -78,6 +78,18 @@ namespace Programowanie_aplikacji_internetowych.webapi.Controllers
             var users = await _userService.GetUsers();
             return Ok(users);
         }
+
+        [HttpPatch]
+        [Route("changeRole")]
+        public async Task<IActionResult> ChangeRole(ChangeRoleForUserDto changeRole)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("Nie prawidłowy model");
+            }
+            await _userService.ChangeRole(changeRole);
+            return Ok();
+        }
     }
 }
 

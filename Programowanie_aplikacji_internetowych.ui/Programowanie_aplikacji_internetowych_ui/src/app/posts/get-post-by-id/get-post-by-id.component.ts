@@ -37,7 +37,6 @@ export class GetPostByIdComponent implements OnInit {
     if (id) {
       this.postService.getPostById(id).subscribe(response => {
         this.post = response;
-
       })
     }
   }
@@ -48,9 +47,14 @@ export class GetPostByIdComponent implements OnInit {
       throw new Error("Komentarz nie może być pusty");
     }
       this.newComment.postId = this.post.id;
-      this.postService.addCommentToPost(this.newComment).subscribe(response => {
+    this.postService.addCommentToPost(this.newComment).subscribe({
+      next: () => {
         this.getPost();
         this.messageService.showMessage("Pomyślnie dodano komentarz", "success");
+      }, error: (err) => {
+        this.messageService.showMessage("Wystąpił błąd podczas dodawania komentarza. Spróbuj ponownie.", "error");
+        }
+
       });
   }
 

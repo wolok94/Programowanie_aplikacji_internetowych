@@ -32,6 +32,7 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
             .ThenInclude(x => x.User)
             .Include(x => x.Comments)
             .ThenInclude(x => x.MetaData)
+            .ThenInclude(x => x.User)
             .FirstOrDefaultAsync(x => x.Id == id);
         return post;
     } 

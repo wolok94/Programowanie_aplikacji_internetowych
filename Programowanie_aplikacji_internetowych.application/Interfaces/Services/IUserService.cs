@@ -11,6 +11,7 @@ namespace Programowanie_aplikacji_internetowych.domain.Interfaces.Services;
 
 public interface IUserService
 {
+    Task ChangeRole(ChangeRoleForUserDto changRole);
     Task<IEnumerable<GetUsersDto>> GetUsers();
     Task<Token> Login(LoginUserDto loginUserDto);
     Task<Token> RefreshToken(string accessToken, string refreshToken);

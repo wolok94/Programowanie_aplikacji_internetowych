@@ -1,34 +1,37 @@
 <div class="container mt-5">
-  <div class="post-details card mb-4">
+  <div *ngIf="post; else loading" class="post-details card mb-4">
 
     <div class="card-header bg-dark text-info">
       <h2>{{ post.title }}</h2>
     </div>
     <div class="card-body">
-      <img src="{{ post.imageUrl }}" class="img-fluid rounded mb-3 d-block mx-auto" alt="Post Image">
-      <p class="text-muted">Opublikowany: {{ post.metaData.createdDate | date: 'dd-MM-yyyy' }}</p>
-      <p class="lead">{{ post.text }}</p>
+      <img 
+        *ngIf="post?.imageUrl" 
+        [src]="post.imageUrl" 
+        class="img-fluid rounded mb-3 d-block mx-auto" 
+        alt="Post Image">
+      <p *ngIf="post?.metaData?.createdDate" class="text-muted">
+        Opublikowany: {{ post.metaData.createdDate | date: 'dd-MM-yyyy' }}
+      </p>
+      <p class="lead" [innerHTML]="post.text"></p>
     </div>
   </div>
 
-  <div class="comments-section card mt-4">
+  <div *ngIf="post?.comments" class="comments-section card mt-4">
 
     <div class="card-header bg-dark text-info">
       <h4>Komentarze</h4>
     </div>
     <div class="card-body">
-      <div *ngIf="post.comments && post.comments.length > 0; else noComments">
+      <div *ngIf="post.comments.length > 0; else noComments">
         <div *ngFor="let comment of post.comments" class="mb-3">
           <div class="d-flex align-items-start">
-            <div class="me-3">
-              <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Avatar">
-            </div>
             <div>
-              <h6 class="fw-bold mb-1">{{ comment.metaData.userName }}</h6>
-              <p class="text-muted small mb-1">
+              <h6 class="fw-bold mb-1">{{ comment?.metaData?.userName }}</h6>
+              <p *ngIf="comment?.metaData?.createdDate" class="text-muted small mb-1">
                 {{ comment.metaData.createdDate | date: 'dd-MM-yyyy HH:mm' }}
               </p>
-              <p>{{ comment.text }}</p>
+              <p>{{ comment?.text }}</p>
             </div>
           </div>
           <hr>
@@ -62,4 +65,8 @@
       </div>
     </div>
   </div>
+
+  <ng-template #loading>
+    <p class="text-center text-muted">Ładowanie danych...</p>
+  </ng-template>
 </div>

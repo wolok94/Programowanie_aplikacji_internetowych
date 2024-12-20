@@ -39,12 +39,15 @@ export class AuthService {
     localStorage.removeItem('refreshTokenExpiresAt');
     localStorage.removeItem('isLoggedIn');
     this.isLogged.next(false);
+    this.isAdmin.next(false);
   }
 
-  checkRole(accessToken : string) {
+  checkRole() {
+    let accessToken = localStorage.getItem("accessToken");
     const decodedToken = accessToken ? jwt_decode.jwtDecode(accessToken) : null;
     let decodedTokenJson = JSON.parse(JSON.stringify(decodedToken));
     let role = decodedTokenJson["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    this.isAdmin.next(role === "Admin");
     return role === "Admin";
 
   }

@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment.development';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const http = inject(HttpClient);
 
-  const apiUrl = environment.apiUrl + "/User/RefreshToken";
+  const apiUrl = environment.apiUrl + "/Users/RefreshToken";
 
   if (req.url.includes('/User/RefreshToken')) {
     return next(req);
