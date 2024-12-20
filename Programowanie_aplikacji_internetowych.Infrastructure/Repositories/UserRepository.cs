@@ -33,4 +33,11 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             .Include(x => x.Role)
             .ToListAsync();
     }
+
+    public async Task<User> GetByRefreshToken(string refreshToken)
+    {
+        return await _dbContext.Users
+            .Include(x => x.RefreshTokens)
+            .FirstOrDefaultAsync(x => x.RefreshTokens.Any(t => t.Token == refreshToken));
+    }
 }

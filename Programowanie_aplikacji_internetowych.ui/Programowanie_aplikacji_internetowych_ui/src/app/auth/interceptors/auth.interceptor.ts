@@ -8,7 +8,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const apiUrl = environment.apiUrl + "/Users/RefreshToken";
 
-  if (req.url.includes('/User/RefreshToken')) {
+  if (req.url.includes('/Users/RefreshToken')) {
     return next(req);
   }
 
